@@ -4642,7 +4642,7 @@ function step(questName) {
 
 // src/main.ts
 var import_kolmafia12 = require("kolmafia");
-var _templateObject84, _templateObject215, _templateObject314, _templateObject413, _templateObject510, _templateObject610, _templateObject710, _templateObject85, _templateObject94, _templateObject03, _templateObject111, _templateObject104, _templateObject114, _templateObject124, _templateObject134, _templateObject144, _templateObject154, _templateObject164;
+var _templateObject84, _templateObject215, _templateObject314, _templateObject413, _templateObject510, _templateObject610, _templateObject710, _templateObject85, _templateObject94, _templateObject03, _templateObject111, _templateObject104, _templateObject114, _templateObject124, _templateObject134, _templateObject144, _templateObject154, _templateObject164, _templateObject174, _templateObject184, _templateObject194, _templateObject204, _templateObject216;
 function _toConsumableArray9(r) {
   return _arrayWithoutHoles9(r) || _iterableToArray9(r) || _unsupportedIterableToArray10(r) || _nonIterableSpread9();
 }
@@ -4772,6 +4772,25 @@ var TaskLoop = {
   choices: {
     1060: 5
   }
+}, TaskBuyLoot = {
+  name: "Buy SOCP Shop Item",
+  ready: function() {
+    var _get, bonePrice = get("_crimboPastDailySpecialPrice"), specialItem = (_get = get("_crimboPastDailySpecialItem")) !== null && _get !== void 0 ? _get : $item(_templateObject174 || (_templateObject174 = _taggedTemplateLiteral6(["none"]))), availableKnucklebones = (0, import_kolmafia12.availableAmount)($item(_templateObject184 || (_templateObject184 = _taggedTemplateLiteral6(["knucklebone"])))), specialItemValue = (0, import_kolmafia12.mallPrice)(specialItem);
+    return availableKnucklebones > bonePrice && specialItemValue > 5e3 * bonePrice;
+  },
+  completed: function() {
+    return !1;
+  },
+  do: function() {
+    var _get2, specialItem = (_get2 = get("_crimboPastDailySpecialItem")) !== null && _get2 !== void 0 ? _get2 : $item(_templateObject194 || (_templateObject194 = _taggedTemplateLiteral6(["none"]))), specialItemValue = (0, import_kolmafia12.mallPrice)(specialItem);
+    (0, import_kolmafia12.buy)($coinmaster(_templateObject204 || (_templateObject204 = _taggedTemplateLiteral6(["Skeleton of Crimbo Past"]))), 1, specialItem), (0, import_kolmafia12.putShop)(specialItemValue, 1, specialItem);
+  },
+  limit: {
+    completed: !0
+  },
+  prepare: function() {
+    (0, import_kolmafia12.visit)($coinmaster(_templateObject216 || (_templateObject216 = _taggedTemplateLiteral6(["Skeleton of Crimbo Past"]))));
+  }
 };
 function main() {
   var engine = new Engine([
@@ -4780,10 +4799,7 @@ function main() {
     TaskUnlockStore,
     TaskStarterFunds,
     TaskDiet
-  ].concat(_toConsumableArray9(QuestRecover.tasks), [
-    TaskFightSkeletons
-    // TaskBuyLoot,
-  ]));
+  ].concat(_toConsumableArray9(QuestRecover.tasks), [TaskFightSkeletons, TaskBuyLoot]));
   engine.run();
 }
 // Annotate the CommonJS export names for ESM import in node:
