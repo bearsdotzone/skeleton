@@ -23,6 +23,7 @@ import {
   KolGender,
   Lifestyle,
   Macro,
+  noneToNull,
 } from "libram";
 
 const TaskLoop: Task = {
@@ -42,6 +43,7 @@ const TaskLoop: Task = {
       lifestyle: Lifestyle.softcore,
       kolGender: KolGender.female,
       moon: "packrat",
+      consumable: $item`none`,
       pet: $item`astral mask`,
     });
     runChoice(1);
