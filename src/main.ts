@@ -17,6 +17,7 @@ import {
   $item,
   $location,
   $path,
+  $skill,
   ascend,
   get,
   KolGender,
@@ -102,7 +103,7 @@ const TaskFightSkeletons: Task = {
   name: "Fight Skeletons",
   completed: () => get("_knuckleboneDrops") === 100,
   do: $location`The Skeleton Store`,
-  combat: new CombatStrategy().autoattack(Macro.attack().repeat()),
+  combat: new CombatStrategy().autoattack(Macro.trySkill(`pickpocket`).attack().repeat()),
   outfit: {
     familiar: $familiar`Skeleton of Crimbo Past`,
     famequip: $item`small peppermint-flavored sugar walking crook`,
