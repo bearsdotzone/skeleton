@@ -4653,9 +4653,6 @@ var TaskLoop = {
     num: 3,
     price: 5e3
   }],
-  choices: {
-    1419: 1
-  },
   completed: function() {
     return !get("kingLiberated");
   },
@@ -4667,7 +4664,7 @@ var TaskLoop = {
       kolGender: KolGender.female,
       moon: "packrat",
       pet: $item(_templateObject413 || (_templateObject413 = _taggedTemplateLiteral6(["astral mask"])))
-    });
+    }), (0, import_kolmafia12.runChoice)(1);
   },
   post: function() {
     return (0, import_kolmafia12.takeStorage)($item(_templateObject510 || (_templateObject510 = _taggedTemplateLiteral6(["small peppermint-flavored sugar walking crook"]))), 1);
