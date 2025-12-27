@@ -6,6 +6,7 @@ import {
   mallPrice,
   myAdventures,
   putShop,
+  runChoice,
   takeStorage,
   visit,
   visitUrl,
@@ -60,6 +61,7 @@ const TaskUnlockStore: Task = {
   completed: () => step("questM23Meatsmith") !== -1,
   do: () => {
     visitUrl("shop.php?whichshop=meatsmith&action=talk", true);
+    runChoice(1);
   },
   limit: { tries: 1 },
 };
