@@ -4,7 +4,6 @@ import {
   availableAmount,
   buy,
   eat,
-  Item,
   mallPrice,
   myAdventures,
   myHp,
@@ -14,7 +13,6 @@ import {
   putShop,
   restoreMp,
   runChoice,
-  sellsItem,
   takeStorage,
   use,
   useSkill,
@@ -173,6 +171,7 @@ const TaskFightSkeletons: Task = {
 const TaskBuyLoot: Task = {
   name: "Buy SOCP Shop Item",
   ready: () => {
+    visit($coinmaster`Skeleton of Crimbo Past`);
     const bonePrice = get("_crimboPastDailySpecialPrice");
     const specialItem = get("_crimboPastDailySpecialItem") ?? $item`none`;
     const availableKnucklebones = availableAmount($item`knucklebone`);
@@ -190,9 +189,6 @@ const TaskBuyLoot: Task = {
   },
   limit: {
     completed: true,
-  },
-  prepare: () => {
-    visit($coinmaster`Skeleton of Crimbo Past`);
   }
 };
 
