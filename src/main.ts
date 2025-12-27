@@ -4,6 +4,7 @@ import {
   availableAmount,
   buy,
   eat,
+  Item,
   mallPrice,
   myAdventures,
   myHp,
@@ -13,6 +14,7 @@ import {
   putShop,
   restoreMp,
   runChoice,
+  sellsItem,
   takeStorage,
   use,
   useSkill,
@@ -171,7 +173,7 @@ const TaskBuyLoot: Task = {
   ready: () => {
     visit($coinmaster`Skeleton of Crimbo Past`);
     const bonePrice = get("_crimboPastDailySpecialPrice");
-    const specialItem = get("_crimboPastDailySpecialItem") ?? $item`none`;
+    const specialItem = get("_crimboPastDailySpecialItem") ?? Item.all().filter(i => sellsItem($coinmaster`Skeleton of Crimbo Past`, i) && i.id < 12052).at(0) ?? $item`none`;
     const availableKnucklebones = availableAmount($item`knucklebone`);
     const specialItemValue = mallPrice(specialItem);
 
@@ -179,7 +181,7 @@ const TaskBuyLoot: Task = {
   },
   completed: () => false,
   do: () => {
-    const specialItem = get("_crimboPastDailySpecialItem") ?? $item`none`;
+    const specialItem = get("_crimboPastDailySpecialItem") ?? Item.all().filter(i => sellsItem($coinmaster`Skeleton of Crimbo Past`, i) && i.id < 12052).at(0) ?? $item`none`;
     const specialItemValue = mallPrice(specialItem);
 
     buy($coinmaster`Skeleton of Crimbo Past`, 1, specialItem);
