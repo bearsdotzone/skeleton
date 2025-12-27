@@ -4677,9 +4677,6 @@ var TaskLoop = {
   }
 }, TaskUnlockStore = {
   name: "Unlock Skeleton Store",
-  choices: {
-    1059: 1
-  },
   completed: function() {
     return step("questM23Meatsmith") !== -1;
   },
