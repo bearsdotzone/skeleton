@@ -17,7 +17,6 @@ import {
   $item,
   $location,
   $path,
-  $skill,
   ascend,
   get,
   KolGender,
