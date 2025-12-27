@@ -53,9 +53,6 @@ const TaskLoop: Task = {
 
 const TaskUnlockStore: Task = {
   name: "Unlock Skeleton Store",
-  choices: {
-    1059: 1,
-  },
   completed: () => step("questM23Meatsmith") !== -1,
   do: () => {
     visitUrl("shop.php?whichshop=meatsmith&action=talk", true);
