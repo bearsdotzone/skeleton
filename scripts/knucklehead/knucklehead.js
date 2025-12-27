@@ -4689,10 +4689,10 @@ var TaskLoop = {
       moon: "packrat",
       consumable: $item(_templateObject413 || (_templateObject413 = _taggedTemplateLiteral6(["none"]))),
       pet: $item(_templateObject510 || (_templateObject510 = _taggedTemplateLiteral6(["astral mask"])))
-    }), (0, import_kolmafia12.runChoice)(1);
+    });
   },
   post: function() {
-    return (0, import_kolmafia12.takeStorage)($item(_templateObject610 || (_templateObject610 = _taggedTemplateLiteral6(["small peppermint-flavored sugar walking crook"]))), 1);
+    (0, import_kolmafia12.runChoice)(1), (0, import_kolmafia12.takeStorage)($item(_templateObject610 || (_templateObject610 = _taggedTemplateLiteral6(["small peppermint-flavored sugar walking crook"]))), 1);
   },
   ready: function() {
     return get("kingLiberated") && get("_knuckleboneDrops") === 100;
