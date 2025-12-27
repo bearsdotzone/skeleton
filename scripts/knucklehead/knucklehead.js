@@ -4687,7 +4687,7 @@ var TaskLoop = {
     return step("questM23Meatsmith") !== -1;
   },
   do: function() {
-    (0, import_kolmafia12.visitUrl)("shop.php?whichshop=meatsmith&action=talk", !0);
+    (0, import_kolmafia12.visitUrl)("shop.php?whichshop=meatsmith&action=talk", !0), (0, import_kolmafia12.runChoice)(1);
   },
   limit: {
     tries: 1
