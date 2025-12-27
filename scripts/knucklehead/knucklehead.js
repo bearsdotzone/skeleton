@@ -4703,6 +4703,14 @@ var TaskLoop = {
   do: function() {
     (0, import_kolmafia12.takeStorage)($item(_templateObject104 || (_templateObject104 = _taggedTemplateLiteral6(["gallon of milk"]))), 1), (0, import_kolmafia12.eat)($item(_templateObject114 || (_templateObject114 = _taggedTemplateLiteral6(["gallon of milk"]))));
   }
+}, TaskRestoreHealth = {
+  name: "Restoring Health",
+  completed: function() {
+    return (0, import_kolmafia12.myHp)() >= (0, import_kolmafia12.myMaxhp)() * 0.8;
+  },
+  do: function() {
+    return (0, import_kolmafia12.restoreHp)((0, import_kolmafia12.myMaxhp)() * 0.8 - (0, import_kolmafia12.myHp)());
+  }
 }, TaskFightSkeletons = {
   name: "Fight Skeletons",
   completed: function() {
@@ -4714,9 +4722,6 @@ var TaskLoop = {
     familiar: $familiar(_templateObject134 || (_templateObject134 = _taggedTemplateLiteral6(["Skeleton of Crimbo Past"]))),
     famequip: $item(_templateObject144 || (_templateObject144 = _taggedTemplateLiteral6(["small peppermint-flavored sugar walking crook"]))),
     modifier: "item"
-  },
-  post: function() {
-    return (0, import_kolmafia12.restoreHp)((0, import_kolmafia12.myMaxhp)() * 0.8 - (0, import_kolmafia12.myHp)());
   },
   choices: {
     1060: 5
@@ -4748,6 +4753,7 @@ function main() {
     TaskUnlockStore,
     TaskStarterFunds,
     TaskDiet,
+    TaskRestoreHealth,
     TaskFightSkeletons,
     TaskBuyLoot
   ]);
