@@ -131,6 +131,11 @@ const QuestRecover: Quest<Task> = {
   name: "Recovering HP/MP",
   tasks: [
     {
+      name: "Funds",
+      completed: () => availableAmount($item`half of a gold tooth`) < 10,
+      do: () => autosell($item`half of a gold tooth`, 10)
+    },
+    {
       name: "Recover",
       ready: () => have($skill`Cannelloni Cocoon`),
       completed: () => myHp() / myMaxhp() >= 0.75,
