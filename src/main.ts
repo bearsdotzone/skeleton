@@ -70,7 +70,7 @@ const TaskUnlockStore: Task = {
     visitUrl("shop.php?whichshop=meatsmith&action=talk", true);
     runChoice(1);
   },
-  limit: { tries: 1 },
+  limit: { tries: 2 },
 };
 
 const TaskStarterFunds: Task = {
