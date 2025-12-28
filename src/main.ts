@@ -20,6 +20,7 @@ import {
   useSkill,
   visit,
   visitUrl,
+  wait,
 } from "kolmafia";
 import {
   $class,
@@ -39,6 +40,9 @@ import {
 
 const TaskLoop: Task = {
   name: "Ascending",
+  choices: {
+    1419: 1
+  },
   completed: () => !visitUrl("place.php?whichplace=greygoo").includes("ascend.php"),
   do: () => {
     ascend({
@@ -52,6 +56,9 @@ const TaskLoop: Task = {
     });
   },
   post: () => {
+    while(!visitUrl("choice.php").includes("It can be goo, though")) {
+      wait(1);
+    }
     runChoice(1);
   },
   prepare: () => {
