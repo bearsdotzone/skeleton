@@ -3,6 +3,7 @@ import {
   autosell,
   availableAmount,
   buy,
+  buyUsingStorage,
   eat,
   mallPrice,
   myAdventures,
@@ -13,6 +14,7 @@ import {
   putShop,
   restoreMp,
   runChoice,
+  storageAmount,
   takeStorage,
   use,
   useSkill,
@@ -37,13 +39,6 @@ import {
 
 const TaskLoop: Task = {
   name: "Ascending",
-  acquire: [
-    {
-      item: $item`gallon of milk`,
-      num: 3,
-      price: 5000,
-    },
-  ],
   completed: () => !visitUrl("place.php?whichplace=greygoo").includes("ascend.php"),
   do: () => {
     ascend({
@@ -59,6 +54,10 @@ const TaskLoop: Task = {
   post: () => {
     runChoice(1);
     takeStorage($item`small peppermint-flavored sugar walking crook`, 1);
+  },
+  prepare: () => {
+    const gallons = storageAmount($item`gallon of milk`);
+    buyUsingStorage($item`gallon of milk`, 3 - gallons, 5000);
   },
   ready: () => visitUrl("place.php?whichplace=greygoo").includes("ascend.php") && get(`_knuckleboneDrops`) === 100,
   limit: { tries: 1 },
