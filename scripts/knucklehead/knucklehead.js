@@ -4672,6 +4672,9 @@ function _taggedTemplateLiteral6(e, t) {
 }
 var TaskLoop = {
   name: "Ascending",
+  choices: {
+    1419: 1
+  },
   completed: function() {
     return !(0, import_kolmafia12.visitUrl)("place.php?whichplace=greygoo").includes("ascend.php");
   },
@@ -4687,6 +4690,8 @@ var TaskLoop = {
     });
   },
   post: function() {
+    for (; !(0, import_kolmafia12.visitUrl)("choice.php").includes("It can be goo, though"); )
+      (0, import_kolmafia12.wait)(1);
     (0, import_kolmafia12.runChoice)(1);
   },
   prepare: function() {
