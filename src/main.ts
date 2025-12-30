@@ -1,10 +1,13 @@
 import { CombatStrategy, Engine, Quest, step, Task } from "grimoire-kolmafia";
 import {
+  abort,
   autosell,
   availableAmount,
   buy,
   buyUsingStorage,
+  drink,
   eat,
+  Item,
   mallPrice,
   myAdventures,
   myHp,
@@ -14,7 +17,6 @@ import {
   putShop,
   restoreMp,
   runChoice,
-  storageAmount,
   takeStorage,
   use,
   useSkill,
@@ -32,6 +34,7 @@ import {
   $skill,
   ascend,
   get,
+  getAverageAdventures,
   have,
   KolGender,
   Lifestyle,
@@ -56,15 +59,15 @@ const TaskLoop: Task = {
     });
   },
   post: () => {
-    while(!visitUrl("choice.php").includes("It can be goo, though")) {
+    while (!visitUrl("choice.php").includes("It can be goo, though")) {
       wait(1);
     }
     runChoice(1);
   },
-  prepare: () => {
-    const gallons = storageAmount($item`gallon of milk`);
-    buyUsingStorage($item`gallon of milk`, 3 - gallons, 5000);
-  },
+  // prepare: () => {
+  //   const gallons = storageAmount($item`gallon of milk`);
+  //   buyUsingStorage($item`gallon of milk`, 3 - gallons, 5000);
+  // },
   ready: () => visitUrl("place.php?whichplace=greygoo").includes("ascend.php") && get(`_knuckleboneDrops`) === 100,
   limit: { tries: 1 },
 };
@@ -129,13 +132,89 @@ const TaskStarterFunds: Task = {
 //   },
 // };
 
+// const TaskDiet: Task = {
+//   name: "Diet",
+//   completed: () => myAdventures() >= 100 - get(`_knuckleboneDrops`),
+//   do: () => {
+//     takeStorage($item`gallon of milk`, 1);
+//     eat($item`gallon of milk`);
+//   },
+// };
+
 const TaskDiet: Task = {
   name: "Diet",
   completed: () => myAdventures() >= 100 - get(`_knuckleboneDrops`),
   do: () => {
-    takeStorage($item`gallon of milk`, 1);
-    eat($item`gallon of milk`);
+    type DietEntry = {
+      item: Item,
+      adventures: number,
+      price: number,
+      fullness: number,
+      inebriety: number,
+    };
+
+    const dietOptions: DietEntry[] = [];
+    Item.all()
+      .filter(i => (i.fullness ^ i.inebriety) && i.tradeable)
+      .filter(i => getAverageAdventures(i) >= 60 / 25)
+      .forEach(i => {
+        dietOptions.push({ item: i, adventures: getAverageAdventures(i), price: mallPrice(i), fullness: i.fullness, inebriety: i.inebriety });
+      });
+    dietOptions.sort((a, b) => b.adventures / b.price - a.adventures / a.price);
+
+    let stomachCapacity = 15;
+    let liverCapacity = 14;
+
+    const toConsume: DietEntry[] = [];
+
+    for (const entry of dietOptions) {
+      if (entry.fullness !== 0 && entry.fullness <= stomachCapacity) {
+        toConsume.push(entry);
+        stomachCapacity -= entry.fullness;
+      }
+      if (entry.inebriety !== 0 && entry.inebriety <= liverCapacity) {
+        toConsume.push(entry);
+        liverCapacity -= entry.inebriety;
+      }
+      if (stomachCapacity === 0 && liverCapacity === 0) {
+        break;
+      }
+    }
+
+    let price = 0;
+    let items = "";
+    for (const entry of toConsume) {
+      items = items.concat(entry.item.name, " ");
+      price += entry.price;
+      stomachCapacity += entry.fullness;
+      liverCapacity += entry.inebriety;
+    }
+
+    if (price > 10000) {
+      abort("The price of this diet is too high!");
+    }
+    if (stomachCapacity !== 15) {
+      abort("Not filling enough stomach!");
+    }
+    if (liverCapacity !== 14) {
+      abort("Not filling enough liver!");
+    }
+
+    toConsume.forEach((i) => {
+      if (i.fullness) {
+        buyUsingStorage(i.item);
+        takeStorage(i.item, 1);
+        eat(i.item);
+      } else {
+        buyUsingStorage(i.item);
+        takeStorage(i.item, 1);
+        drink(i.item);
+      }
+    });
   },
+  limit: {
+    tries: 1,
+  }
 };
 
 const QuestRecover: Quest<Task> = {
