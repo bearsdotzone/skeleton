@@ -193,7 +193,7 @@ const TaskBuyLoot: Task = {
     const availableKnucklebones = availableAmount($item`knucklebone`);
     const specialItemValue = mallPrice(specialItem);
 
-    return availableKnucklebones > bonePrice && specialItemValue > 5000 * bonePrice;
+    return availableKnucklebones > bonePrice && specialItemValue > 5000 * bonePrice && specialItem.tradeable;
   },
   completed: () => false,
   do: () => {
