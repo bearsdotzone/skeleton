@@ -6,6 +6,7 @@ import {
   buy,
   buyUsingStorage,
   drink,
+  drinksilent,
   eat,
   Item,
   mallPrice,
@@ -208,7 +209,7 @@ const TaskDiet: Task = {
       } else {
         buyUsingStorage(i.item);
         takeStorage(i.item, 1);
-        drink(i.item);
+        drinksilent(i.item);
       }
     });
   },
