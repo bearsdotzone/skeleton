@@ -4655,7 +4655,7 @@ function step(questName) {
 
 // src/main.ts
 var import_kolmafia12 = require("kolmafia");
-var _templateObject84, _templateObject215, _templateObject314, _templateObject413, _templateObject510, _templateObject610, _templateObject710, _templateObject85, _templateObject94, _templateObject03, _templateObject111, _templateObject104, _templateObject114, _templateObject124, _templateObject134, _templateObject144, _templateObject154, _templateObject164, _templateObject174, _templateObject184, _templateObject194, _templateObject204, _templateObject216;
+var _templateObject84, _templateObject215, _templateObject314, _templateObject413, _templateObject510, _templateObject610, _templateObject710, _templateObject85, _templateObject94, _templateObject03, _templateObject111, _templateObject104, _templateObject114, _templateObject124, _templateObject134, _templateObject144, _templateObject154, _templateObject164, _templateObject174, _templateObject184, _templateObject194, _templateObject204, _templateObject216, _templateObject224, _templateObject234, _templateObject244, _templateObject254, _templateObject264;
 function _toConsumableArray9(r) {
   return _arrayWithoutHoles9(r) || _iterableToArray9(r) || _unsupportedIterableToArray10(r) || _nonIterableSpread9();
 }
@@ -4795,13 +4795,24 @@ var TaskLoop = {
   }, {
     name: "Recover",
     ready: function() {
-      return have($skill(_templateObject124 || (_templateObject124 = _taggedTemplateLiteral6(["Cannelloni Cocoon"]))));
+      return have($skill(_templateObject124 || (_templateObject124 = _taggedTemplateLiteral6(["Cannelloni Cocoon"])))) && (0, import_kolmafia12.myMp)() >= (0, import_kolmafia12.mpCost)($skill(_templateObject134 || (_templateObject134 = _taggedTemplateLiteral6(["Cannelloni Cocoon"]))));
     },
     completed: function() {
       return (0, import_kolmafia12.myHp)() / (0, import_kolmafia12.myMaxhp)() >= 0.75;
     },
     do: function() {
-      (0, import_kolmafia12.useSkill)($skill(_templateObject134 || (_templateObject134 = _taggedTemplateLiteral6(["Cannelloni Cocoon"]))));
+      (0, import_kolmafia12.useSkill)($skill(_templateObject144 || (_templateObject144 = _taggedTemplateLiteral6(["Cannelloni Cocoon"]))));
+    }
+  }, {
+    name: "Recover Tongue",
+    ready: function() {
+      return have($skill(_templateObject154 || (_templateObject154 = _taggedTemplateLiteral6(["Tongue of the Walrus"])))) && (0, import_kolmafia12.myMp)() >= (0, import_kolmafia12.mpCost)($skill(_templateObject164 || (_templateObject164 = _taggedTemplateLiteral6(["Tongue of the Walrus"]))));
+    },
+    completed: function() {
+      return (0, import_kolmafia12.myHp)() / (0, import_kolmafia12.myMaxhp)() >= 0.75;
+    },
+    do: function() {
+      (0, import_kolmafia12.useSkill)($skill(_templateObject174 || (_templateObject174 = _taggedTemplateLiteral6(["Tongue of the Walrus"]))));
     }
   }, {
     name: "Recover Failed",
@@ -4825,11 +4836,11 @@ var TaskLoop = {
   completed: function() {
     return get("_knuckleboneDrops") === 100;
   },
-  do: $location(_templateObject144 || (_templateObject144 = _taggedTemplateLiteral6(["The Skeleton Store"]))),
+  do: $location(_templateObject184 || (_templateObject184 = _taggedTemplateLiteral6(["The Skeleton Store"]))),
   combat: new CombatStrategy().autoattack(Macro.step("pickpocket").attack().repeat()),
   outfit: {
-    familiar: $familiar(_templateObject154 || (_templateObject154 = _taggedTemplateLiteral6(["Skeleton of Crimbo Past"]))),
-    famequip: $item(_templateObject164 || (_templateObject164 = _taggedTemplateLiteral6(["small peppermint-flavored sugar walking crook"]))),
+    familiar: $familiar(_templateObject194 || (_templateObject194 = _taggedTemplateLiteral6(["Skeleton of Crimbo Past"]))),
+    famequip: $item(_templateObject204 || (_templateObject204 = _taggedTemplateLiteral6(["small peppermint-flavored sugar walking crook"]))),
     modifier: "item"
   },
   choices: {
@@ -4839,16 +4850,16 @@ var TaskLoop = {
   name: "Buy SOCP Shop Item",
   ready: function() {
     var _get;
-    (0, import_kolmafia12.visit)($coinmaster(_templateObject174 || (_templateObject174 = _taggedTemplateLiteral6(["Skeleton of Crimbo Past"]))));
-    var bonePrice = get("_crimboPastDailySpecialPrice"), specialItem = (_get = get("_crimboPastDailySpecialItem")) !== null && _get !== void 0 ? _get : $item(_templateObject184 || (_templateObject184 = _taggedTemplateLiteral6(["none"]))), availableKnucklebones = (0, import_kolmafia12.availableAmount)($item(_templateObject194 || (_templateObject194 = _taggedTemplateLiteral6(["knucklebone"])))), specialItemValue = (0, import_kolmafia12.mallPrice)(specialItem);
+    (0, import_kolmafia12.visit)($coinmaster(_templateObject216 || (_templateObject216 = _taggedTemplateLiteral6(["Skeleton of Crimbo Past"]))));
+    var bonePrice = get("_crimboPastDailySpecialPrice"), specialItem = (_get = get("_crimboPastDailySpecialItem")) !== null && _get !== void 0 ? _get : $item(_templateObject224 || (_templateObject224 = _taggedTemplateLiteral6(["none"]))), availableKnucklebones = (0, import_kolmafia12.availableAmount)($item(_templateObject234 || (_templateObject234 = _taggedTemplateLiteral6(["knucklebone"])))) + (0, import_kolmafia12.storageAmount)($item(_templateObject244 || (_templateObject244 = _taggedTemplateLiteral6(["knucklebone"])))), specialItemValue = (0, import_kolmafia12.mallPrice)(specialItem);
     return availableKnucklebones > bonePrice && specialItemValue > 5e3 * bonePrice && specialItem.tradeable;
   },
   completed: function() {
     return !1;
   },
   do: function() {
-    var _get2, specialItem = (_get2 = get("_crimboPastDailySpecialItem")) !== null && _get2 !== void 0 ? _get2 : $item(_templateObject204 || (_templateObject204 = _taggedTemplateLiteral6(["none"]))), specialItemValue = (0, import_kolmafia12.mallPrice)(specialItem);
-    (0, import_kolmafia12.buy)($coinmaster(_templateObject216 || (_templateObject216 = _taggedTemplateLiteral6(["Skeleton of Crimbo Past"]))), 1, specialItem), (0, import_kolmafia12.putShop)(specialItemValue, 1, specialItem);
+    var _get2, specialItem = (_get2 = get("_crimboPastDailySpecialItem")) !== null && _get2 !== void 0 ? _get2 : $item(_templateObject254 || (_templateObject254 = _taggedTemplateLiteral6(["none"]))), specialItemValue = (0, import_kolmafia12.mallPrice)(specialItem);
+    (0, import_kolmafia12.buy)($coinmaster(_templateObject264 || (_templateObject264 = _taggedTemplateLiteral6(["Skeleton of Crimbo Past"]))), 1, specialItem), (0, import_kolmafia12.putShop)(specialItemValue, 1, specialItem);
   },
   limit: {
     completed: !0
