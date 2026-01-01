@@ -4815,20 +4815,23 @@ var TaskLoop = {
       (0, import_kolmafia12.useSkill)($skill(_templateObject174 || (_templateObject174 = _taggedTemplateLiteral6(["Tongue of the Walrus"]))));
     }
   }, {
-    name: "Recover Failed",
-    completed: function() {
-      return (0, import_kolmafia12.myHp)() / (0, import_kolmafia12.myMaxhp)() >= 0.5;
-    },
-    do: function() {
-      throw "Unable to heal above 50% HP, heal yourself!";
-    }
-  }, {
     name: "Recover MP",
     completed: function() {
       return (0, import_kolmafia12.myMp)() >= Math.min(250, (0, import_kolmafia12.myMaxmp)());
     },
     do: function() {
       return (0, import_kolmafia12.restoreMp)(300);
+    },
+    limit: {
+      tries: 20
+    }
+  }, {
+    name: "Recover Failed",
+    completed: function() {
+      return (0, import_kolmafia12.myHp)() / (0, import_kolmafia12.myMaxhp)() >= 0.5;
+    },
+    do: function() {
+      throw "Unable to heal above 50% HP, heal yourself!";
     }
   }]
 }, TaskFightSkeletons = {
