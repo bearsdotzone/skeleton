@@ -283,14 +283,16 @@ const TaskBuyLoot: Task = {
     const availableKnucklebones = availableAmount($item`knucklebone`) + storageAmount($item`knucklebone`);
     const specialItemValue = mallPrice(specialItem);
 
-    return availableKnucklebones > bonePrice && specialItemValue > 5000 * bonePrice && specialItem.tradeable;
+    return availableKnucklebones > bonePrice && specialItemValue > 5000 * bonePrice && specialItem.tradeable && !get('_crimboPastDailySpecial');
   },
   completed: () => false,
   do: () => {
     const specialItem = get("_crimboPastDailySpecialItem") ?? $item`none`;
     const specialItemValue = mallPrice(specialItem);
 
-    buy($coinmaster`Skeleton of Crimbo Past`, 1, specialItem);
+    // buy($coinmaster`Skeleton of Crimbo Past`, 1, specialItem);
+    visitUrl("main.php?talktosocp=1");
+    visitUrl("choice.php?name=choiceform4", true);
     putShop(specialItemValue, 1, specialItem);
   },
   limit: {
