@@ -10,6 +10,7 @@ import {
   eat,
   Item,
   mallPrice,
+  mpCost,
   myAdventures,
   myHp,
   myMaxhp,
@@ -229,10 +230,18 @@ const QuestRecover: Quest<Task> = {
     },
     {
       name: "Recover",
-      ready: () => have($skill`Cannelloni Cocoon`),
+      ready: () => have($skill`Cannelloni Cocoon`) && myMp() >= mpCost($skill`Cannelloni Cocoon`),
       completed: () => myHp() / myMaxhp() >= 0.75,
       do: () => {
         useSkill($skill`Cannelloni Cocoon`);
+      },
+    },
+    {
+      name: "Recover Tongue",
+      ready: () => have($skill`Tongue of the Walrus`) && myMp() >= mpCost($skill`Tongue of the Walrus`),
+      completed: () => myHp() / myMaxhp() >= 0.75,
+      do: () => {
+        useSkill($skill`Tongue of the Walrus`);
       },
     },
     {
