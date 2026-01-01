@@ -4862,7 +4862,7 @@ var TaskLoop = {
   },
   do: function() {
     var _get2, specialItem = (_get2 = get("_crimboPastDailySpecialItem")) !== null && _get2 !== void 0 ? _get2 : $item(_templateObject254 || (_templateObject254 = _taggedTemplateLiteral6(["none"]))), specialItemValue = (0, import_kolmafia12.mallPrice)(specialItem);
-    (0, import_kolmafia12.visitUrl)("main.php?talktosocp=1", !1, !0), (0, import_kolmafia12.visitUrl)("choice.php?name=choiceform4", !0), (0, import_kolmafia12.putShop)(specialItemValue, 1, specialItem);
+    (0, import_kolmafia12.visitUrl)("main.php?talktosocp=1", !1, !0), (0, import_kolmafia12.visitUrl)("choice.php?whichchoice=1567&option=4", !0, !0), (0, import_kolmafia12.putShop)(specialItemValue, 1, specialItem);
   },
   limit: {
     completed: !0
