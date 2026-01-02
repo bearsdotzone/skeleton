@@ -29,7 +29,6 @@ const config = {
   plugins: [babel(), ...(doWatch ? [watchPlugin] : [])],
   outdir: "dist/scripts/knucklehead",
   loader: { ".json": "text" },
-  inject: ["./kolmafia-polyfill.js"],
   define: {
     "process.env.NODE_ENV": '"production"',
   },
