@@ -871,6 +871,12 @@ function isSong(skillOrEffect) {
   var skill = skillOrEffect instanceof import_kolmafia5.Effect ? (0, import_kolmafia5.toSkill)(skillOrEffect) : skillOrEffect;
   return skill.class === $class(_templateObject || (_templateObject = _taggedTemplateLiteral(["Accordion Thief"]))) && skill.buff;
 }
+function getRemainingLiver() {
+  return (0, import_kolmafia5.inebrietyLimit)() - (0, import_kolmafia5.myInebriety)();
+}
+function getRemainingStomach() {
+  return (0, import_kolmafia5.fullnessLimit)() - (0, import_kolmafia5.myFullness)();
+}
 function have(thing) {
   var quantity = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 1;
   if (thing instanceof import_kolmafia5.Effect)
@@ -4685,9 +4691,6 @@ function _taggedTemplateLiteral6(e, t) {
 }
 var TaskLoop = {
   name: "Ascending",
-  choices: {
-    1419: 1
-  },
   completed: function() {
     return !(0, import_kolmafia12.visitUrl)("place.php?whichplace=greygoo").includes("ascend.php");
   },
@@ -4707,10 +4710,6 @@ var TaskLoop = {
       (0, import_kolmafia12.wait)(1);
     (0, import_kolmafia12.runChoice)(1);
   },
-  // prepare: () => {
-  //   const gallons = storageAmount($item`gallon of milk`);
-  //   buyUsingStorage($item`gallon of milk`, 3 - gallons, 5000);
-  // },
   ready: function() {
     return (0, import_kolmafia12.visitUrl)("place.php?whichplace=greygoo").includes("ascend.php") && get("_knuckleboneDrops") === 100;
   },
@@ -4742,16 +4741,21 @@ var TaskLoop = {
     return step("questM05Toot") === 999;
   },
   do: function() {
-    (0, import_kolmafia12.visitUrl)("tutorial.php?action=toot", !0), (0, import_kolmafia12.use)($item(_templateObject710 || (_templateObject710 = _taggedTemplateLiteral6(["letter from King Ralph XI"])))), (0, import_kolmafia12.use)($item(_templateObject85 || (_templateObject85 = _taggedTemplateLiteral6(["pork elf goodies sack"])))), (0, import_kolmafia12.autosell)($item(_templateObject94 || (_templateObject94 = _taggedTemplateLiteral6(["baconstone"]))), 5), (0, import_kolmafia12.autosell)($item(_templateObject03 || (_templateObject03 = _taggedTemplateLiteral6(["hamethyst"]))), 5), (0, import_kolmafia12.autosell)($item(_templateObject111 || (_templateObject111 = _taggedTemplateLiteral6(["porquoise"]))), 5);
+    (0, import_kolmafia12.visitUrl)("tutorial.php?action=toot", !0), (0, import_kolmafia12.use)($item(_templateObject710 || (_templateObject710 = _taggedTemplateLiteral6(["letter from King Ralph XI"])))), (0, import_kolmafia12.use)($item(_templateObject85 || (_templateObject85 = _taggedTemplateLiteral6(["pork elf goodies sack"])))), (0, import_kolmafia12.autosell)($item(_templateObject94 || (_templateObject94 = _taggedTemplateLiteral6(["baconstone"]))), 5), (0, import_kolmafia12.autosell)($item(_templateObject03 || (_templateObject03 = _taggedTemplateLiteral6(["hamethyst"]))), 5), (0, import_kolmafia12.autosell)($item(_templateObject111 || (_templateObject111 = _taggedTemplateLiteral6(["porquoise"]))), 5), (0, import_kolmafia12.visitUrl)("storage.php?name=addmeat&which=5&action=takemeat&amt=".concat((0, import_kolmafia12.pullsRemaining)(), "000"), !0, !0);
   }
-}, TaskDiet = {
+}, dietOptions = [], TaskDiet = {
   name: "Diet",
   completed: function() {
     return (0, import_kolmafia12.myAdventures)() >= 100 - get("_knuckleboneDrops");
   },
   do: function() {
-    var dietOptions = [];
-    import_kolmafia12.Item.all().filter(function(i) {
+    var toConsume = dietOptions.find(function(x) {
+      return x.fullness !== 0 && x.fullness <= getRemainingStomach() || x.inebriety !== 0 && x.inebriety <= getRemainingLiver();
+    });
+    (toConsume === void 0 || toConsume.price >= 5e3) && (0, import_kolmafia12.abort)("Couldn't find a suitable consumable."), toConsume.fullness ? ((0, import_kolmafia12.buyUsingStorage)(toConsume.item), (0, import_kolmafia12.takeStorage)(toConsume.item, 1), (0, import_kolmafia12.eatsilent)(toConsume.item)) : toConsume.inebriety ? ((0, import_kolmafia12.buyUsingStorage)(toConsume.item), (0, import_kolmafia12.takeStorage)(toConsume.item, 1), (0, import_kolmafia12.drinksilent)(toConsume.item)) : (0, import_kolmafia12.abort)("Didn't consume anything!");
+  },
+  prepare: function() {
+    dietOptions.length === 0 && (import_kolmafia12.Item.all().filter(function(i) {
       return i.fullness ^ i.inebriety && i.tradeable;
     }).filter(function(i) {
       return getAverageAdventures(i) >= 60 / 25;
@@ -4765,19 +4769,7 @@ var TaskLoop = {
       });
     }), dietOptions.sort(function(a, b) {
       return b.adventures / b.price - a.adventures / a.price;
-    });
-    for (var stomachCapacity = 15, liverCapacity = 14, toConsume = [], _i = 0, _dietOptions = dietOptions; _i < _dietOptions.length; _i++) {
-      var entry = _dietOptions[_i];
-      if (entry.fullness !== 0 && entry.fullness <= stomachCapacity && (toConsume.push(entry), stomachCapacity -= entry.fullness), entry.inebriety !== 0 && entry.inebriety <= liverCapacity && (toConsume.push(entry), liverCapacity -= entry.inebriety), stomachCapacity === 0 && liverCapacity === 0)
-        break;
-    }
-    for (var price = 0, items = "", _i2 = 0, _toConsume = toConsume; _i2 < _toConsume.length; _i2++) {
-      var _entry = _toConsume[_i2];
-      items = items.concat(_entry.item.name, " "), price += _entry.price, stomachCapacity += _entry.fullness, liverCapacity += _entry.inebriety;
-    }
-    price > 1e4 && (0, import_kolmafia12.abort)("The price of this diet is too high!"), stomachCapacity !== 15 && (0, import_kolmafia12.abort)("Not filling enough stomach!"), liverCapacity !== 14 && (0, import_kolmafia12.abort)("Not filling enough liver!"), toConsume.forEach(function(i) {
-      i.fullness ? ((0, import_kolmafia12.buyUsingStorage)(i.item), (0, import_kolmafia12.takeStorage)(i.item, 1), (0, import_kolmafia12.eat)(i.item)) : ((0, import_kolmafia12.buyUsingStorage)(i.item), (0, import_kolmafia12.takeStorage)(i.item, 1), (0, import_kolmafia12.drinksilent)(i.item));
-    });
+    }));
   },
   limit: {
     tries: 1
@@ -4855,7 +4847,7 @@ var TaskLoop = {
     var _get;
     (0, import_kolmafia12.visit)($coinmaster(_templateObject216 || (_templateObject216 = _taggedTemplateLiteral6(["Skeleton of Crimbo Past"]))));
     var bonePrice = get("_crimboPastDailySpecialPrice"), specialItem = (_get = get("_crimboPastDailySpecialItem")) !== null && _get !== void 0 ? _get : $item(_templateObject224 || (_templateObject224 = _taggedTemplateLiteral6(["none"]))), availableKnucklebones = (0, import_kolmafia12.availableAmount)($item(_templateObject234 || (_templateObject234 = _taggedTemplateLiteral6(["knucklebone"])))) + (0, import_kolmafia12.storageAmount)($item(_templateObject244 || (_templateObject244 = _taggedTemplateLiteral6(["knucklebone"])))), specialItemValue = (0, import_kolmafia12.mallPrice)(specialItem);
-    return availableKnucklebones > bonePrice && specialItemValue > 5e3 * bonePrice && specialItem.tradeable;
+    return availableKnucklebones >= bonePrice && specialItemValue >= 5e3 * bonePrice && specialItem.tradeable;
   },
   completed: function() {
     return get("_crimboPastDailySpecial");
@@ -4869,14 +4861,7 @@ var TaskLoop = {
   }
 };
 function main() {
-  var engine = new Engine([
-    TaskLoop,
-    // TaskGetScripts,
-    TaskRetrieveGear,
-    TaskUnlockStore,
-    TaskStarterFunds,
-    TaskDiet
-  ].concat(_toConsumableArray9(QuestRecover.tasks), [TaskFightSkeletons, TaskBuyLoot]));
+  var engine = new Engine([TaskLoop, TaskRetrieveGear, TaskUnlockStore, TaskDiet, TaskStarterFunds].concat(_toConsumableArray9(QuestRecover.tasks), [TaskFightSkeletons, TaskBuyLoot]));
   engine.run();
 }
 // Annotate the CommonJS export names for ESM import in node:
