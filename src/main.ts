@@ -66,8 +66,8 @@ const TaskLoop: Task = {
     runChoice(1);
   },
   ready: () =>
-    visitUrl("place.php?whichplace=greygoo").includes("ascend.php") &&
-    get(`_knuckleboneDrops`) === 100,
+    get(`_knuckleboneDrops`) === 100 &&
+    visitUrl("place.php?whichplace=greygoo").includes("ascend.php"),
   limit: { tries: 1 },
 };
 
@@ -127,6 +127,7 @@ const TaskDiet: Task = {
     if (toConsume === undefined || toConsume.price >= 5000) {
       abort("Couldn't find a suitable consumable.");
     }
+    toConsume = toConsume as DietEntry;
 
     if (toConsume.fullness) {
       buyUsingStorage(toConsume.item);
@@ -158,7 +159,7 @@ const TaskDiet: Task = {
     }
   },
   limit: {
-    tries: 1,
+    tries: 19,
   },
 };
 
