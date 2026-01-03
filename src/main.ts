@@ -97,7 +97,11 @@ const TaskStarterFunds: Task = {
     autosell($item`baconstone`, 5);
     autosell($item`hamethyst`, 5);
     autosell($item`porquoise`, 5);
-    visitUrl(`storage.php?name=addmeat&which=5&action=takemeat&amt=${pullsRemaining()}000`, true, true);
+    visitUrl(
+      `storage.php?name=addmeat&which=5&action=takemeat&amt=${pullsRemaining()}000`,
+      true,
+      true,
+    );
   },
 };
 
