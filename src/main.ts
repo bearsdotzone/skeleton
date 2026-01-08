@@ -16,7 +16,7 @@ import {
   myMaxmp,
   myMp,
   pullsRemaining,
-  putShop,
+  putShopUsingStorage,
   restoreMp,
   runChoice,
   storageAmount,
@@ -123,8 +123,10 @@ const TaskDiet: Task = {
       (x) =>
         ((x.fullness !== 0 && x.fullness <= getRemainingStomach()) ||
           (x.inebriety !== 0 && x.inebriety <= getRemainingLiver())) &&
-        !get("_roninStoragePulls").split(",").find((i) => i === `${x.item.id}`) &&
-        x.item.levelreq <= myLevel()
+        !get("_roninStoragePulls")
+          .split(",")
+          .find((i) => i === `${x.item.id}`) &&
+        x.item.levelreq <= myLevel(),
     );
 
     if (toConsume === undefined || toConsume.price >= 5000) {
@@ -248,7 +250,7 @@ const TaskBuyLoot: Task = {
     // buy($coinmaster`Skeleton of Crimbo Past`, 1, specialItem);
     visitUrl("main.php?talktosocp=1", false, true);
     visitUrl("choice.php?whichchoice=1567&option=4", true, true);
-    putShop(specialItemValue, 1, specialItem);
+    putShopUsingStorage(specialItemValue, 1, specialItem);
   },
   limit: {
     tries: 1,
