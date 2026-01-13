@@ -4655,8 +4655,17 @@ function step(questName) {
 }
 
 // src/main.ts
+var import_kolmafia13 = require("kolmafia");
+
+// src/lib.ts
 var import_kolmafia12 = require("kolmafia");
-var _templateObject84, _templateObject215, _templateObject314, _templateObject413, _templateObject510, _templateObject610, _templateObject710, _templateObject85, _templateObject94, _templateObject03, _templateObject111, _templateObject104, _templateObject114, _templateObject124, _templateObject134, _templateObject144, _templateObject154, _templateObject164, _templateObject174, _templateObject184, _templateObject194, _templateObject204, _templateObject216, _templateObject224, _templateObject234, _templateObject244, _templateObject254;
+function pricegunValue(item) {
+  var pricegunData = (0, import_kolmafia12.visitUrl)("https://pricegun.loathers.net/api/".concat(item.id)), data = JSON.parse(pricegunData);
+  return !data || !data.value || data.value <= 0 ? 0 : data.value;
+}
+
+// src/main.ts
+var _templateObject84, _templateObject215, _templateObject314, _templateObject413, _templateObject510, _templateObject610, _templateObject710, _templateObject85, _templateObject94, _templateObject03, _templateObject111, _templateObject104, _templateObject114, _templateObject124, _templateObject134, _templateObject144, _templateObject154, _templateObject164, _templateObject174, _templateObject184, _templateObject194, _templateObject204, _templateObject216, _templateObject224, _templateObject234, _templateObject244, _templateObject254, _templateObject264, _templateObject274;
 function _toConsumableArray9(r) {
   return _arrayWithoutHoles9(r) || _iterableToArray9(r) || _unsupportedIterableToArray10(r) || _nonIterableSpread9();
 }
@@ -4687,7 +4696,7 @@ function _taggedTemplateLiteral6(e, t) {
 var TaskLoop = {
   name: "Ascending",
   completed: function() {
-    return !(0, import_kolmafia12.visitUrl)("place.php?whichplace=greygoo").includes("ascend.php");
+    return !(0, import_kolmafia13.visitUrl)("place.php?whichplace=greygoo").includes("ascend.php");
   },
   do: function() {
     ascend({
@@ -4701,12 +4710,12 @@ var TaskLoop = {
     });
   },
   post: function() {
-    for (; !(0, import_kolmafia12.visitUrl)("choice.php").includes("It can be goo, though"); )
-      (0, import_kolmafia12.wait)(1);
-    (0, import_kolmafia12.runChoice)(1);
+    for (; !(0, import_kolmafia13.visitUrl)("choice.php").includes("It can be goo, though"); )
+      (0, import_kolmafia13.wait)(1);
+    (0, import_kolmafia13.runChoice)(1);
   },
   ready: function() {
-    return get("_knuckleboneDrops") === 100 && (0, import_kolmafia12.visitUrl)("place.php?whichplace=greygoo").includes("ascend.php");
+    return get("_knuckleboneDrops") === 100 && (0, import_kolmafia13.visitUrl)("place.php?whichplace=greygoo").includes("ascend.php");
   },
   limit: {
     tries: 1
@@ -4714,10 +4723,10 @@ var TaskLoop = {
 }, TaskRetrieveGear = {
   name: "Retrieve Gear from Storage",
   completed: function() {
-    return (0, import_kolmafia12.availableAmount)($item(_templateObject510 || (_templateObject510 = _taggedTemplateLiteral6(["small peppermint-flavored sugar walking crook"])))) > 0;
+    return (0, import_kolmafia13.availableAmount)($item(_templateObject510 || (_templateObject510 = _taggedTemplateLiteral6(["bejeweled accordion strap"])))) > 0 && (0, import_kolmafia13.availableAmount)($item(_templateObject610 || (_templateObject610 = _taggedTemplateLiteral6(["small peppermint-flavored sugar walking crook"])))) > 0;
   },
   do: function() {
-    return (0, import_kolmafia12.takeStorage)($item(_templateObject610 || (_templateObject610 = _taggedTemplateLiteral6(["small peppermint-flavored sugar walking crook"]))), 1);
+    (0, import_kolmafia13.takeStorage)($item(_templateObject710 || (_templateObject710 = _taggedTemplateLiteral6(["bejeweled accordion strap"]))), 1), (0, import_kolmafia13.takeStorage)($item(_templateObject85 || (_templateObject85 = _taggedTemplateLiteral6(["small peppermint-flavored sugar walking crook"]))), 1);
   }
 }, TaskUnlockStore = {
   name: "Unlock Skeleton Store",
@@ -4725,7 +4734,7 @@ var TaskLoop = {
     return step("questM23Meatsmith") !== -1;
   },
   do: function() {
-    (0, import_kolmafia12.visitUrl)("shop.php?whichshop=meatsmith&action=talk", !0), (0, import_kolmafia12.runChoice)(1);
+    (0, import_kolmafia13.visitUrl)("shop.php?whichshop=meatsmith&action=talk", !0), (0, import_kolmafia13.runChoice)(1);
   },
   limit: {
     tries: 1
@@ -4736,23 +4745,23 @@ var TaskLoop = {
     return step("questM05Toot") === 999;
   },
   do: function() {
-    (0, import_kolmafia12.visitUrl)("tutorial.php?action=toot", !0), (0, import_kolmafia12.use)($item(_templateObject710 || (_templateObject710 = _taggedTemplateLiteral6(["letter from King Ralph XI"])))), (0, import_kolmafia12.use)($item(_templateObject85 || (_templateObject85 = _taggedTemplateLiteral6(["pork elf goodies sack"])))), (0, import_kolmafia12.autosell)($item(_templateObject94 || (_templateObject94 = _taggedTemplateLiteral6(["baconstone"]))), 5), (0, import_kolmafia12.autosell)($item(_templateObject03 || (_templateObject03 = _taggedTemplateLiteral6(["hamethyst"]))), 5), (0, import_kolmafia12.autosell)($item(_templateObject111 || (_templateObject111 = _taggedTemplateLiteral6(["porquoise"]))), 5), (0, import_kolmafia12.visitUrl)("storage.php?name=addmeat&which=5&action=takemeat&amt=".concat((0, import_kolmafia12.pullsRemaining)(), "000"), !0, !0);
+    (0, import_kolmafia13.visitUrl)("tutorial.php?action=toot", !0), (0, import_kolmafia13.use)($item(_templateObject94 || (_templateObject94 = _taggedTemplateLiteral6(["letter from King Ralph XI"])))), (0, import_kolmafia13.use)($item(_templateObject03 || (_templateObject03 = _taggedTemplateLiteral6(["pork elf goodies sack"])))), (0, import_kolmafia13.autosell)($item(_templateObject111 || (_templateObject111 = _taggedTemplateLiteral6(["baconstone"]))), 5), (0, import_kolmafia13.autosell)($item(_templateObject104 || (_templateObject104 = _taggedTemplateLiteral6(["hamethyst"]))), 5), (0, import_kolmafia13.autosell)($item(_templateObject114 || (_templateObject114 = _taggedTemplateLiteral6(["porquoise"]))), 5), (0, import_kolmafia13.visitUrl)("storage.php?name=addmeat&which=5&action=takemeat&amt=".concat((0, import_kolmafia13.pullsRemaining)(), "000"), !0, !0);
   }
 }, dietOptions = [], TaskDiet = {
   name: "Diet",
   completed: function() {
-    return (0, import_kolmafia12.myAdventures)() >= 100 - get("_knuckleboneDrops");
+    return (0, import_kolmafia13.myAdventures)() >= 100 - get("_knuckleboneDrops");
   },
   do: function() {
     var toConsume = dietOptions.find(function(x) {
       return (x.fullness !== 0 && x.fullness <= getRemainingStomach() || x.inebriety !== 0 && x.inebriety <= getRemainingLiver()) && !get("_roninStoragePulls").split(",").find(function(i) {
         return i === "".concat(x.item.id);
-      }) && x.item.levelreq <= (0, import_kolmafia12.myLevel)();
+      }) && x.item.levelreq <= (0, import_kolmafia13.myLevel)();
     });
-    (toConsume === void 0 || toConsume.price >= 5e3) && (0, import_kolmafia12.abort)("Couldn't find a suitable consumable."), toConsume = toConsume, toConsume.fullness ? ((0, import_kolmafia12.buyUsingStorage)(toConsume.item), (0, import_kolmafia12.takeStorage)(toConsume.item, 1), (0, import_kolmafia12.eatsilent)(toConsume.item)) : toConsume.inebriety ? ((0, import_kolmafia12.buyUsingStorage)(toConsume.item), (0, import_kolmafia12.takeStorage)(toConsume.item, 1), (0, import_kolmafia12.drinksilent)(toConsume.item)) : (0, import_kolmafia12.abort)("Didn't consume anything!");
+    (toConsume === void 0 || toConsume.price >= 5e3) && (0, import_kolmafia13.abort)("Couldn't find a suitable consumable."), toConsume = toConsume, toConsume.fullness ? ((0, import_kolmafia13.buyUsingStorage)(toConsume.item), (0, import_kolmafia13.takeStorage)(toConsume.item, 1), (0, import_kolmafia13.eatsilent)(toConsume.item)) : toConsume.inebriety ? ((0, import_kolmafia13.buyUsingStorage)(toConsume.item), (0, import_kolmafia13.takeStorage)(toConsume.item, 1), (0, import_kolmafia13.drinksilent)(toConsume.item)) : (0, import_kolmafia13.abort)("Didn't consume anything!");
   },
   prepare: function() {
-    dietOptions.length === 0 && (import_kolmafia12.Item.all().filter(function(i) {
+    dietOptions.length === 0 && (import_kolmafia13.Item.all().filter(function(i) {
       return i.fullness ^ i.inebriety && i.tradeable;
     }).filter(function(i) {
       return getAverageAdventures(i) / (i.fullness | i.inebriety) >= 60 / 25;
@@ -4760,7 +4769,7 @@ var TaskLoop = {
       dietOptions.push({
         item: i,
         adventures: getAverageAdventures(i),
-        price: (0, import_kolmafia12.mallPrice)(i),
+        price: (0, import_kolmafia13.mallPrice)(i),
         fullness: i.fullness,
         inebriety: i.inebriety
       });
@@ -4776,40 +4785,40 @@ var TaskLoop = {
   tasks: [{
     name: "Funds",
     completed: function() {
-      return (0, import_kolmafia12.availableAmount)($item(_templateObject104 || (_templateObject104 = _taggedTemplateLiteral6(["half of a gold tooth"])))) < 10;
+      return (0, import_kolmafia13.availableAmount)($item(_templateObject124 || (_templateObject124 = _taggedTemplateLiteral6(["half of a gold tooth"])))) < 10;
     },
     do: function() {
-      return (0, import_kolmafia12.autosell)($item(_templateObject114 || (_templateObject114 = _taggedTemplateLiteral6(["half of a gold tooth"]))), 10);
+      return (0, import_kolmafia13.autosell)($item(_templateObject134 || (_templateObject134 = _taggedTemplateLiteral6(["half of a gold tooth"]))), 10);
     }
   }, {
     name: "Recover",
     ready: function() {
-      return have($skill(_templateObject124 || (_templateObject124 = _taggedTemplateLiteral6(["Cannelloni Cocoon"])))) && (0, import_kolmafia12.myMp)() >= (0, import_kolmafia12.mpCost)($skill(_templateObject134 || (_templateObject134 = _taggedTemplateLiteral6(["Cannelloni Cocoon"]))));
+      return have($skill(_templateObject144 || (_templateObject144 = _taggedTemplateLiteral6(["Cannelloni Cocoon"])))) && (0, import_kolmafia13.myMp)() >= (0, import_kolmafia13.mpCost)($skill(_templateObject154 || (_templateObject154 = _taggedTemplateLiteral6(["Cannelloni Cocoon"]))));
     },
     completed: function() {
-      return (0, import_kolmafia12.myHp)() / (0, import_kolmafia12.myMaxhp)() >= 0.75;
+      return (0, import_kolmafia13.myHp)() / (0, import_kolmafia13.myMaxhp)() >= 0.75;
     },
     do: function() {
-      (0, import_kolmafia12.useSkill)($skill(_templateObject144 || (_templateObject144 = _taggedTemplateLiteral6(["Cannelloni Cocoon"]))));
+      (0, import_kolmafia13.useSkill)($skill(_templateObject164 || (_templateObject164 = _taggedTemplateLiteral6(["Cannelloni Cocoon"]))));
     }
   }, {
     name: "Recover Tongue",
     ready: function() {
-      return have($skill(_templateObject154 || (_templateObject154 = _taggedTemplateLiteral6(["Tongue of the Walrus"])))) && (0, import_kolmafia12.myMp)() >= (0, import_kolmafia12.mpCost)($skill(_templateObject164 || (_templateObject164 = _taggedTemplateLiteral6(["Tongue of the Walrus"]))));
+      return have($skill(_templateObject174 || (_templateObject174 = _taggedTemplateLiteral6(["Tongue of the Walrus"])))) && (0, import_kolmafia13.myMp)() >= (0, import_kolmafia13.mpCost)($skill(_templateObject184 || (_templateObject184 = _taggedTemplateLiteral6(["Tongue of the Walrus"]))));
     },
     completed: function() {
-      return (0, import_kolmafia12.myHp)() / (0, import_kolmafia12.myMaxhp)() >= 0.75;
+      return (0, import_kolmafia13.myHp)() / (0, import_kolmafia13.myMaxhp)() >= 0.75;
     },
     do: function() {
-      (0, import_kolmafia12.useSkill)($skill(_templateObject174 || (_templateObject174 = _taggedTemplateLiteral6(["Tongue of the Walrus"]))));
+      (0, import_kolmafia13.useSkill)($skill(_templateObject194 || (_templateObject194 = _taggedTemplateLiteral6(["Tongue of the Walrus"]))));
     }
   }, {
     name: "Recover MP",
     completed: function() {
-      return (0, import_kolmafia12.myMp)() >= Math.min(250, (0, import_kolmafia12.myMaxmp)());
+      return (0, import_kolmafia13.myMp)() >= Math.min(250, (0, import_kolmafia13.myMaxmp)());
     },
     do: function() {
-      return (0, import_kolmafia12.restoreMp)(300);
+      return (0, import_kolmafia13.restoreMp)(300);
     },
     limit: {
       tries: 20
@@ -4817,7 +4826,7 @@ var TaskLoop = {
   }, {
     name: "Recover Failed",
     completed: function() {
-      return (0, import_kolmafia12.myHp)() / (0, import_kolmafia12.myMaxhp)() >= 0.5;
+      return (0, import_kolmafia13.myHp)() / (0, import_kolmafia13.myMaxhp)() >= 0.5;
     },
     do: function() {
       throw "Unable to heal above 50% HP, heal yourself!";
@@ -4828,11 +4837,11 @@ var TaskLoop = {
   completed: function() {
     return get("_knuckleboneDrops") === 100;
   },
-  do: $location(_templateObject184 || (_templateObject184 = _taggedTemplateLiteral6(["The Skeleton Store"]))),
+  do: $location(_templateObject204 || (_templateObject204 = _taggedTemplateLiteral6(["The Skeleton Store"]))),
   combat: new CombatStrategy().autoattack(Macro.step("pickpocket").attack().repeat()),
   outfit: {
-    familiar: $familiar(_templateObject194 || (_templateObject194 = _taggedTemplateLiteral6(["Skeleton of Crimbo Past"]))),
-    famequip: $item(_templateObject204 || (_templateObject204 = _taggedTemplateLiteral6(["small peppermint-flavored sugar walking crook"]))),
+    familiar: $familiar(_templateObject216 || (_templateObject216 = _taggedTemplateLiteral6(["Skeleton of Crimbo Past"]))),
+    famequip: $item(_templateObject224 || (_templateObject224 = _taggedTemplateLiteral6(["small peppermint-flavored sugar walking crook"]))),
     modifier: "item"
   },
   choices: {
@@ -4842,16 +4851,16 @@ var TaskLoop = {
   name: "Buy SOCP Shop Item",
   ready: function() {
     var _get;
-    (0, import_kolmafia12.visit)($coinmaster(_templateObject216 || (_templateObject216 = _taggedTemplateLiteral6(["Skeleton of Crimbo Past"]))));
-    var bonePrice = get("_crimboPastDailySpecialPrice"), specialItem = (_get = get("_crimboPastDailySpecialItem")) !== null && _get !== void 0 ? _get : $item(_templateObject224 || (_templateObject224 = _taggedTemplateLiteral6(["none"]))), availableKnucklebones = (0, import_kolmafia12.availableAmount)($item(_templateObject234 || (_templateObject234 = _taggedTemplateLiteral6(["knucklebone"])))) + (0, import_kolmafia12.storageAmount)($item(_templateObject244 || (_templateObject244 = _taggedTemplateLiteral6(["knucklebone"])))), specialItemValue = (0, import_kolmafia12.mallPrice)(specialItem);
+    (0, import_kolmafia13.visit)($coinmaster(_templateObject234 || (_templateObject234 = _taggedTemplateLiteral6(["Skeleton of Crimbo Past"]))));
+    var bonePrice = get("_crimboPastDailySpecialPrice"), specialItem = (_get = get("_crimboPastDailySpecialItem")) !== null && _get !== void 0 ? _get : $item(_templateObject244 || (_templateObject244 = _taggedTemplateLiteral6(["none"]))), availableKnucklebones = (0, import_kolmafia13.availableAmount)($item(_templateObject254 || (_templateObject254 = _taggedTemplateLiteral6(["knucklebone"])))) + (0, import_kolmafia13.storageAmount)($item(_templateObject264 || (_templateObject264 = _taggedTemplateLiteral6(["knucklebone"])))), specialItemValue = pricegunValue(specialItem);
     return availableKnucklebones >= bonePrice && specialItemValue >= 5e3 * bonePrice && specialItem.tradeable;
   },
   completed: function() {
     return get("_crimboPastDailySpecial");
   },
   do: function() {
-    var _get2, specialItem = (_get2 = get("_crimboPastDailySpecialItem")) !== null && _get2 !== void 0 ? _get2 : $item(_templateObject254 || (_templateObject254 = _taggedTemplateLiteral6(["none"]))), specialItemValue = (0, import_kolmafia12.mallPrice)(specialItem);
-    (0, import_kolmafia12.visitUrl)("main.php?talktosocp=1", !1, !0), (0, import_kolmafia12.visitUrl)("choice.php?whichchoice=1567&option=4", !0, !0), (0, import_kolmafia12.putShopUsingStorage)(specialItemValue, 0, specialItem);
+    var _get2, specialItem = (_get2 = get("_crimboPastDailySpecialItem")) !== null && _get2 !== void 0 ? _get2 : $item(_templateObject274 || (_templateObject274 = _taggedTemplateLiteral6(["none"]))), specialItemValue = pricegunValue(specialItem);
+    (0, import_kolmafia13.visitUrl)("main.php?talktosocp=1", !1, !0), (0, import_kolmafia13.visitUrl)("choice.php?whichchoice=1567&option=4", !0, !0), (0, import_kolmafia13.putShopUsingStorage)(specialItemValue, 0, specialItem);
   },
   limit: {
     tries: 1
