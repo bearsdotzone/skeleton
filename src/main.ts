@@ -45,6 +45,7 @@ import {
   Lifestyle,
   Macro,
 } from "libram";
+import { pricegunValue } from "./lib";
 
 const TaskLoop: Task = {
   name: "Ascending",
@@ -74,8 +75,13 @@ const TaskLoop: Task = {
 
 const TaskRetrieveGear: Task = {
   name: "Retrieve Gear from Storage",
-  completed: () => availableAmount($item`small peppermint-flavored sugar walking crook`) > 0,
-  do: () => takeStorage($item`small peppermint-flavored sugar walking crook`, 1),
+  completed: () =>
+    availableAmount($item`bejeweled accordion strap`) > 0 &&
+    availableAmount($item`small peppermint-flavored sugar walking crook`) > 0,
+  do: () => {
+    takeStorage($item`bejeweled accordion strap`, 1);
+    takeStorage($item`small peppermint-flavored sugar walking crook`, 1);
+  },
 };
 
 const TaskUnlockStore: Task = {
@@ -234,7 +240,7 @@ const TaskBuyLoot: Task = {
     const specialItem = get("_crimboPastDailySpecialItem") ?? $item`none`;
     const availableKnucklebones =
       availableAmount($item`knucklebone`) + storageAmount($item`knucklebone`);
-    const specialItemValue = mallPrice(specialItem);
+    const specialItemValue = pricegunValue(specialItem);
 
     return (
       availableKnucklebones >= bonePrice &&
@@ -245,7 +251,7 @@ const TaskBuyLoot: Task = {
   completed: () => get("_crimboPastDailySpecial"),
   do: () => {
     const specialItem = get("_crimboPastDailySpecialItem") ?? $item`none`;
-    const specialItemValue = mallPrice(specialItem);
+    const specialItemValue = pricegunValue(specialItem);
 
     // buy($coinmaster`Skeleton of Crimbo Past`, 1, specialItem);
     visitUrl("main.php?talktosocp=1", false, true);
