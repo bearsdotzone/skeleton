@@ -172,6 +172,9 @@ const TaskDiet: Task = {
   limit: {
     tries: 19,
   },
+  outfit: {
+    modifier: "mp",
+  },
 };
 
 const QuestRecover: Quest<Task> = {
@@ -238,15 +241,12 @@ const TaskBuyLoot: Task = {
     visit($coinmaster`Skeleton of Crimbo Past`);
     const bonePrice = get("_crimboPastDailySpecialPrice");
     const specialItem = get("_crimboPastDailySpecialItem") ?? $item`none`;
+    if (!specialItem.tradeable) return false;
     const availableKnucklebones =
       availableAmount($item`knucklebone`) + storageAmount($item`knucklebone`);
     const specialItemValue = pricegunValue(specialItem);
 
-    return (
-      availableKnucklebones >= bonePrice &&
-      specialItemValue >= 5000 * bonePrice &&
-      specialItem.tradeable
-    );
+    return availableKnucklebones >= bonePrice && specialItemValue >= 5000 * bonePrice;
   },
   completed: () => get("_crimboPastDailySpecial"),
   do: () => {
