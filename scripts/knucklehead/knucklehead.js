@@ -4779,6 +4779,9 @@ var TaskLoop = {
   },
   limit: {
     tries: 19
+  },
+  outfit: {
+    modifier: "mp"
   }
 }, QuestRecover = {
   name: "Recovering HP/MP",
@@ -4852,8 +4855,10 @@ var TaskLoop = {
   ready: function() {
     var _get;
     (0, import_kolmafia13.visit)($coinmaster(_templateObject234 || (_templateObject234 = _taggedTemplateLiteral6(["Skeleton of Crimbo Past"]))));
-    var bonePrice = get("_crimboPastDailySpecialPrice"), specialItem = (_get = get("_crimboPastDailySpecialItem")) !== null && _get !== void 0 ? _get : $item(_templateObject244 || (_templateObject244 = _taggedTemplateLiteral6(["none"]))), availableKnucklebones = (0, import_kolmafia13.availableAmount)($item(_templateObject254 || (_templateObject254 = _taggedTemplateLiteral6(["knucklebone"])))) + (0, import_kolmafia13.storageAmount)($item(_templateObject264 || (_templateObject264 = _taggedTemplateLiteral6(["knucklebone"])))), specialItemValue = pricegunValue(specialItem);
-    return availableKnucklebones >= bonePrice && specialItemValue >= 5e3 * bonePrice && specialItem.tradeable;
+    var bonePrice = get("_crimboPastDailySpecialPrice"), specialItem = (_get = get("_crimboPastDailySpecialItem")) !== null && _get !== void 0 ? _get : $item(_templateObject244 || (_templateObject244 = _taggedTemplateLiteral6(["none"])));
+    if (!specialItem.tradeable) return !1;
+    var availableKnucklebones = (0, import_kolmafia13.availableAmount)($item(_templateObject254 || (_templateObject254 = _taggedTemplateLiteral6(["knucklebone"])))) + (0, import_kolmafia13.storageAmount)($item(_templateObject264 || (_templateObject264 = _taggedTemplateLiteral6(["knucklebone"])))), specialItemValue = pricegunValue(specialItem);
+    return availableKnucklebones >= bonePrice && specialItemValue >= 5e3 * bonePrice;
   },
   completed: function() {
     return get("_crimboPastDailySpecial");
